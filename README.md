@@ -1,2 +1,2 @@
-# ClassArch
-Self-training method for 3D Classification
+# ClassArch: Self-training method for 3D Classification
+
