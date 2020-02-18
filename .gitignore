@@ -5,7 +5,13 @@ __pycache__/
 
 # C extensions
 *.so
-
+*/ModelNet40/
+*/modelnet40_ply_hdf5_2048/
+ClassArch/data/modelnet40/
+*.zip
+*.off
+*.pt
+*.ckpt
 # Distribution / packaging
 .Python
 build/

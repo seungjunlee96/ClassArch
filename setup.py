@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name            = 'ClassARch',
+    name            = 'ClassArch',
     version         = '1.0',
     description     = 'ClassArch: Self-training method for 3D Classification',
     author          = 'Younghan Kim',

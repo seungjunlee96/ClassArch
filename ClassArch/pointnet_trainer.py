@@ -44,7 +44,7 @@ class FitResult(NamedTuple):
     test_acc: List[float]
     best_score: float
 
-class Trainer:
+class PointNetTrainer:
     """
     A class abstracting the various tasks of training models.
 
@@ -57,6 +57,7 @@ class Trainer:
                  model,
                  loss_fn,
                  optimizer,
+                 scheduler,
                  objective_metric,
                  device="cuda",
                  tensorboard_logger=None,
@@ -81,6 +82,7 @@ class Trainer:
         self.model = model
         self.loss_fn = loss_fn
         self.optimizer = optimizer
+        self.scheduler = scheduler
         self.objective_metric = objective_metric
         self.device = device
 
@@ -154,6 +156,7 @@ class Trainer:
         :return: An EpochResult for the epoch.
         """
         self.model.train()  # set train mode
+        self.scheduler.step()
         return self._foreach_batch(dl_train, self.train_batch, **kw)
 
     def test_epoch(self, dl_test: DataLoader, **kw) -> EpochResult:
@@ -190,7 +193,8 @@ class Trainer:
         else:
             X = X.to(self.device)
         y = y.to(self.device)
-        pred = self.model(X)
+        y = y.flatten()
+        pred = self.model(X)[0]
         loss = self.loss_fn(pred, y)
         self.optimizer.zero_grad()
         loss.backward()
@@ -223,7 +227,8 @@ class Trainer:
             else:
                 X = X.to(self.device)
             y = y.to(self.device)
-            pred = self.model(X)
+            y = y.flatten()
+            pred = self.model(X)[0]
             loss = self.loss_fn(pred, y)
             score = self.objective_metric(pred, y)
             if self.tensorboard_logger:
