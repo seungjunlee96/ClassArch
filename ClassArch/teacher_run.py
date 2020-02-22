@@ -53,8 +53,10 @@ if __name__ == '__main__':
 
     f = h5py.File('data/modelnet40/ply_data_unlabeled0.h5')
     data  = f['data'][:]
+    print(f.keys())
     
     final_label = h5py.File('data/modelnet40/ply_data_labeled0.h5', 'w')
+    print(final_label)
     final_label['data'] = data
     final_label['label'] = label
 
