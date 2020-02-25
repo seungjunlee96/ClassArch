@@ -52,7 +52,13 @@ print(cfg)
 model_dict = {'pointnet': (PointNet(k=40), F.nll_loss, accuracy, torch.optim.Adam, PointNetTrainer)}
 
 train_transforms = transforms.Compose([
-    data_utils.PointcloudToTensor()
+    data_utils.PointcloudToTensor(),
+    data_utils.PointcloudRotatebyAngle(np.pi/4),
+    data_utils.PointcloudJitter(),
+    data_utils.PointcloudScaleAndTranslate(),
+    data_utils.PointcloudScale(),
+    data_utils.PointcloudTranslate(),
+    data_utils.PointcloudRandomInputDropout()
 ])
 
 test_transforms = transforms.Compose([
