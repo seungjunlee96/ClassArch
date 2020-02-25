@@ -66,7 +66,7 @@ print(device)
 
 if __name__ == "__main__":
     ds_train = ModelNet40Dataset(num_points=2500, root=cfg.dataset, transforms=train_transforms)
-    ds_test = ModelNet40Dataset(num_points=2500, root=cfg.dataset, train=False, transforms=test_transforms)
+    ds_test = ModelNet40Dataset(num_points=2500, root=cfg.dataset, transforms=test_transforms , split = 'test')
     dl_train = DataLoader(ds_train, batch_size=cfg.batch_size, shuffle=True, num_workers=cfg.workers, pin_memory=True)
     dl_test = DataLoader(ds_test, batch_size=cfg.batch_size, shuffle=False, num_workers=cfg.workers, pin_memory=True)
     print("DATA LOADED")
