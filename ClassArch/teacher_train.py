@@ -73,7 +73,12 @@ if __name__ == "__main__":
     optimizer = optimizer(model.parameters(), lr=cfg.lr)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
     print(model, criterion, optimizer)
-
+    
+    try: 
+        os.mkdir("./epoch_save_model")
+    except:
+        pass
+    
     trainer = trainer(model, criterion, optimizer, scheduler, metric, device, None)
     fit = trainer.fit(dl_train, dl_test, num_epochs=cfg.epoch, checkpoints=cfg.save_model+model.__class__.__name__+'.pt')
 
